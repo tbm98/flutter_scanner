@@ -6,12 +6,12 @@ part of ai_barcode;
 class PlatformAiBarcodeScannerWidget extends StatefulWidget {
   ///
   ///Controller.
-  ScannerController _platformScannerController;
+  late ScannerController _platformScannerController;
 
   ///
   /// Constructor.
   PlatformAiBarcodeScannerWidget(
-      {@required ScannerController platformScannerController}) {
+      {required ScannerController platformScannerController}) {
     this._platformScannerController = platformScannerController;
   }
 
@@ -91,8 +91,8 @@ class ScannerController {
 
   ///
   /// Result
-  Function _scannerResult;
-  Function _scannerViewCreated;
+  late Function _scannerResult;
+  Function? _scannerViewCreated;
 
   bool _isStartCamera = false;
   bool _isStartCameraPreview = false;
@@ -101,8 +101,8 @@ class ScannerController {
   ///
   /// Constructor.
   ScannerController({
-    @required scannerResult(String result),
-    scannerViewCreated(),
+    required scannerResult(String result),
+    scannerViewCreated()?,
   }) {
     this._scannerResult = scannerResult;
     this._scannerViewCreated = scannerViewCreated;
@@ -131,7 +131,7 @@ class ScannerController {
   /// Start camera preview with open QRCode、BarCode scanner,this is open code scanner.
   startCameraPreview() async {
     this._isStartCameraPreview = true;
-    String code = await _methodChannel.invokeMethod("resumeCameraPreview");
+    String? code = await _methodChannel.invokeMethod("resumeCameraPreview");
     _scannerResult(code);
   }
 
